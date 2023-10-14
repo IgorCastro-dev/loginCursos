@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -32,4 +33,7 @@ public class Users {
     @ManyToOne
     @JoinColumn(name = "subscriptions_type_id")
     private Long subscriptionsType;
+
+    @OneToMany(mappedBy = "users",cascade = CascadeType.ALL)
+    private List<UserPaymentInfo> usersPaymentInfo ;
 }
