@@ -20,6 +20,6 @@ public class SubscriptionsType {
 
     private BigDecimal price;
 
-    @Column(name = "product_key")
+    @Column(name = "product_key",unique = true)
     private String productKey;
 }

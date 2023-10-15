@@ -2,6 +2,7 @@ package com.igor.logincurso.domain.controller;
 
 import com.igor.logincurso.domain.model.SubscriptionsType;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
+import com.igor.logincurso.dto.SubscriptionsTypeDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,4 +24,8 @@ public class SubscriptionsTypeController{
         return ResponseEntity.ok(subscriptionsTypeService.findById(id));
     }
 
+    @PostMapping
+    public ResponseEntity<SubscriptionsType> save(@RequestBody SubscriptionsTypeDto subscriptionsTypeDto){
+        return ResponseEntity.ok(subscriptionsTypeService.save(subscriptionsTypeDto));
+    }
 }
