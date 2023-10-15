@@ -1,4 +1,4 @@
-package domain.model;
+package com.igor.logincurso.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,5 +42,5 @@ public class UserPaymentInfo {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user_id;
+    private Users users;
 }

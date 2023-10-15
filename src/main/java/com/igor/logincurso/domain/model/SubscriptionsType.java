@@ -1,4 +1,4 @@
-package domain.model;
+package com.igor.logincurso.domain.model;
 
 import lombok.Data;
 

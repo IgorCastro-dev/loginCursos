@@ -1,4 +1,4 @@
-package domain.model;
+package com.igor.logincurso.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -38,8 +38,8 @@ public class Users {
 
     @ManyToOne
     @JoinColumn(name = "subscriptions_type_id")
-    private Long subscriptionsType;
+    private SubscriptionsType subscriptionsType;
 
-    @OneToMany(mappedBy = "users",cascade = CascadeType.ALL)
-    private List<UserPaymentInfo> usersPaymentInfo ;
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<UserPaymentInfo> usersPaymentInfo;
 }
