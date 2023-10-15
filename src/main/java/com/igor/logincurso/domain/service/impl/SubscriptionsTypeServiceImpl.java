@@ -54,6 +54,7 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         }
     }
 
+    @Transactional
     @Override
     public SubscriptionsType update(SubscriptionsTypeDto subscriptionsTypeDto, Long id) {
         SubscriptionsType subscriptionsType = this.findById(id);
@@ -62,8 +63,10 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         return subscriptionsTypeAtualizado;
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
-
+        SubscriptionsType subscriptionsType = findById(id);
+        subscriptionsTypeRepository.delete(subscriptionsType);
     }
 }
