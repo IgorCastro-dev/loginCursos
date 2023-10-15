@@ -3,6 +3,7 @@ package com.igor.logincurso.domain.service.impl;
 import com.igor.logincurso.domain.model.SubscriptionsType;
 import com.igor.logincurso.domain.repository.SubscriptionsTypeRepository;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
+import com.igor.logincurso.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
     @Override
     public SubscriptionsType findById(Long id) {
         if (subscriptionsTypeRepository.findById(id).isEmpty()){
-            return null;
+            throw new NotFoundException("SubscriptionsType não encontrado");
         }
         return subscriptionsTypeRepository.findById(id).get();
     }
