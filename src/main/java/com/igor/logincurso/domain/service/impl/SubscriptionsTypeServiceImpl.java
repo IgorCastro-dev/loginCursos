@@ -20,6 +20,14 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
     }
 
     @Override
+    public SubscriptionsType findById(Long id) {
+        if (subscriptionsTypeRepository.findById(id).isEmpty()){
+            return null;
+        }
+        return subscriptionsTypeRepository.findById(id).get();
+    }
+
+    @Override
     public SubscriptionsType save(SubscriptionsType subscriptionsType) {
         return null;
     }

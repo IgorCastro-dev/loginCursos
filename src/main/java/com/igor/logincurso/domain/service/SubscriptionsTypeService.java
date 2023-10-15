@@ -8,6 +8,8 @@ public interface SubscriptionsTypeService {
 
     List<SubscriptionsType> findAll();
 
+    SubscriptionsType findById(Long id);
+
     SubscriptionsType save(SubscriptionsType subscriptionsType);
 
     SubscriptionsType update(SubscriptionsType subscriptionsType,Long id);
