@@ -1,5 +1,6 @@
 package com.igor.logincurso.exception.handler;
 
+import com.igor.logincurso.exception.BadRequestException;
 import com.igor.logincurso.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,5 +12,10 @@ public class ResourceHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> notFoundException(NotFoundException n){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(n.getMessage());
+    }
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<String> badRequestException(BadRequestException b){
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(b.getMessage());
     }
 }

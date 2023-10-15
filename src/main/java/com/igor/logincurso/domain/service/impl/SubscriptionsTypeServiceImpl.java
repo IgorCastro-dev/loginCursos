@@ -4,11 +4,16 @@ import com.igor.logincurso.domain.model.SubscriptionsType;
 import com.igor.logincurso.domain.repository.SubscriptionsTypeRepository;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
 import com.igor.logincurso.dto.SubscriptionsTypeDto;
+import com.igor.logincurso.exception.BadRequestException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.modelmapper.SubscriptionsTypeAssembler;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -20,6 +25,9 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
 
     @Autowired
     private SubscriptionsTypeAssembler subscriptionsTypeAssembler;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<SubscriptionsType> findAll() {
@@ -37,14 +45,21 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
     @Transactional
     @Override
     public SubscriptionsType save(SubscriptionsTypeDto subscriptionsTypeDto) {
-        SubscriptionsType subscriptionsType = subscriptionsTypeAssembler.dtoToEntity(subscriptionsTypeDto);
-        SubscriptionsType subscriptionsTypeSalvo = subscriptionsTypeRepository.save(subscriptionsType);
-        return subscriptionsTypeSalvo;
+        try{
+            SubscriptionsType subscriptionsType = subscriptionsTypeAssembler.dtoToEntity(subscriptionsTypeDto);
+            SubscriptionsType subscriptionsTypeSalvo = subscriptionsTypeRepository.save(subscriptionsType);
+            return subscriptionsTypeSalvo;
+        }catch (DataIntegrityViolationException e){
+            throw new BadRequestException(e.getCause().getCause().getMessage());
+        }
     }
 
     @Override
-    public SubscriptionsType update(SubscriptionsType subscriptionsType, Long id) {
-        return null;
+    public SubscriptionsType update(SubscriptionsTypeDto subscriptionsTypeDto, Long id) {
+        SubscriptionsType subscriptionsType = this.findById(id);
+        modelMapper.map(subscriptionsTypeDto,subscriptionsType);
+        SubscriptionsType subscriptionsTypeAtualizado = subscriptionsTypeRepository.save(subscriptionsType);
+        return subscriptionsTypeAtualizado;
     }
 
     @Override

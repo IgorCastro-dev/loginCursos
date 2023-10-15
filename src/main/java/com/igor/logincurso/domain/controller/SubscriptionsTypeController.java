@@ -28,4 +28,9 @@ public class SubscriptionsTypeController{
     public ResponseEntity<SubscriptionsType> save(@RequestBody SubscriptionsTypeDto subscriptionsTypeDto){
         return ResponseEntity.ok(subscriptionsTypeService.save(subscriptionsTypeDto));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SubscriptionsType> update(@PathVariable("id") Long id,@RequestBody SubscriptionsTypeDto subscriptionsTypeDto){
+        return ResponseEntity.ok(subscriptionsTypeService.update(subscriptionsTypeDto,id));
+    }
 }
