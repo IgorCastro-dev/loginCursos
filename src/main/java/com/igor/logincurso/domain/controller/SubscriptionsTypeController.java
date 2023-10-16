@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,12 +28,12 @@ public class SubscriptionsTypeController{
     }
 
     @PostMapping
-    public ResponseEntity<SubscriptionsType> save(@RequestBody SubscriptionsTypeDto subscriptionsTypeDto){
+    public ResponseEntity<SubscriptionsType> save(@RequestBody @Valid SubscriptionsTypeDto subscriptionsTypeDto){
         return ResponseEntity.ok(subscriptionsTypeService.save(subscriptionsTypeDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubscriptionsType> update(@PathVariable("id") Long id,@RequestBody SubscriptionsTypeDto subscriptionsTypeDto){
+    public ResponseEntity<SubscriptionsType> update(@PathVariable("id") Long id,@RequestBody @Valid SubscriptionsTypeDto subscriptionsTypeDto){
         return ResponseEntity.ok(subscriptionsTypeService.update(subscriptionsTypeDto,id));
     }
 
