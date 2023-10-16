@@ -45,13 +45,9 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
     @Transactional
     @Override
     public SubscriptionsType save(SubscriptionsTypeDto subscriptionsTypeDto) {
-        try{
-            SubscriptionsType subscriptionsType = subscriptionsTypeAssembler.dtoToEntity(subscriptionsTypeDto);
-            SubscriptionsType subscriptionsTypeSalvo = subscriptionsTypeRepository.save(subscriptionsType);
-            return subscriptionsTypeSalvo;
-        }catch (DataIntegrityViolationException e){
-            throw new BadRequestException(e.getCause().getCause().getMessage());
-        }
+        SubscriptionsType subscriptionsType = subscriptionsTypeAssembler.dtoToEntity(subscriptionsTypeDto);
+        SubscriptionsType subscriptionsTypeSalvo = subscriptionsTypeRepository.save(subscriptionsType);
+        return subscriptionsTypeSalvo;
     }
 
     @Transactional

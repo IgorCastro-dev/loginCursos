@@ -5,10 +5,10 @@ import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.igor.logincurso.exception.BadRequestException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.exception.erro.ErroResponseDto;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -17,7 +17,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -82,6 +81,14 @@ public class ResourceHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolationException(ConstraintViolationException ex) {
+        ErroResponseDto erro = ErroResponseDto.builder().httpStatus(HttpStatus.BAD_REQUEST)
+                .message(ex.getCause().getMessage())
+                .httpStatusCode(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
 
     private ResponseEntity<ErroResponseDto> criaPropertyBindingException(PropertyBindingException ex) {
         String path = ex.getPath().stream()
