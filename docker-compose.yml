@@ -10,3 +10,11 @@ services:
       MYSQL_PASSWORD: igor
     ports:
       - "3306:3306"
+#  mongo:
+#    image: mongo
+#    restart: always
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: igor
+#      MONGO_INITDB_ROOT_PASSWORD: igor
+#    ports:
+#      - "27017:27017"
