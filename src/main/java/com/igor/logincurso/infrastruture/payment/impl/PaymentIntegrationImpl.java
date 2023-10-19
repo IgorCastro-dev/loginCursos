@@ -45,8 +45,16 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
     }
 
     @Override
-    public boolean processPayment(PaymentDto paymentDto) {
-        return false;
+    public Boolean processPayment(PaymentDto paymentDto) {
+        try {
+            HttpEntity<PaymentDto> request = new HttpEntity<>(paymentDto,httpHeaders);
+            ResponseEntity<Boolean> response = restTemplate.exchange(
+                    "http://localhost:8081/v1/payment/credit-card/",HttpMethod.POST,
+                    request,Boolean.class);
+            return response.getBody();
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     private static HttpHeaders getHttpHeaders() {

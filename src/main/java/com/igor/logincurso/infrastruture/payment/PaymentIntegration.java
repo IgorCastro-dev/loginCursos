@@ -9,5 +9,5 @@ public interface PaymentIntegration {
 
     CustomerDto createCustomer(CustomerDto customerDto);
     OrderDto createOrder(OrderDto orderDto);
-    boolean processPayment(PaymentDto paymentDto);
+    Boolean processPayment(PaymentDto paymentDto);
 }
