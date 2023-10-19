@@ -4,25 +4,23 @@ import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
 import com.igor.logincurso.dto.payment.PaymentDto;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import java.util.Base64;
 
 @Component
 public class PaymentIntegrationImpl implements PaymentIntegration {
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final HttpHeaders httpHeaders;
     public PaymentIntegrationImpl(){
         this.restTemplate = new RestTemplate();
+        this.httpHeaders = getHttpHeaders();
     }
 
     @Override
     public CustomerDto createCustomer(CustomerDto customerDto) {
         try {
-            HttpHeaders httpHeaders = getHttpHeaders();
             HttpEntity<CustomerDto> request = new HttpEntity<>(customerDto,httpHeaders);
             ResponseEntity<CustomerDto> response = restTemplate.exchange(
                     "http://localhost:8081/v1/customer", HttpMethod.POST,
@@ -35,7 +33,15 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Override
     public OrderDto createOrder(OrderDto orderDto) {
-        return null;
+        try {
+            HttpEntity<OrderDto> request = new HttpEntity<>(orderDto,httpHeaders);
+            ResponseEntity<OrderDto> response = restTemplate.exchange(
+                    "http://localhost:8081/v1/order",HttpMethod.POST,
+                    request,OrderDto.class);
+            return response.getBody();
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     @Override
