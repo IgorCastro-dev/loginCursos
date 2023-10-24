@@ -3,6 +3,7 @@ package com.igor.logincurso.infrastruture.payment.impl;
 import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
 import com.igor.logincurso.dto.payment.PaymentDto;
+import com.igor.logincurso.exception.IntegrationException;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -40,7 +41,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
                     request,CustomerDto.class);
             return response.getBody();
         }catch (Exception e){
-            throw e;
+            throw new IntegrationException(e.getMessage(),e.getCause());
         }
     }
 
@@ -53,7 +54,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
                     request,OrderDto.class);
             return response.getBody();
         }catch (Exception e){
-            throw e;
+            throw new IntegrationException(e.getMessage(),e.getCause());
         }
     }
 
@@ -66,7 +67,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
                     request,Boolean.class);
             return response.getBody();
         }catch (Exception e){
-            throw e;
+            throw new IntegrationException(e.getMessage(),e.getCause());
         }
     }
 

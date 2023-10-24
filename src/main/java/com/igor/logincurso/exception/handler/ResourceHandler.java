@@ -3,6 +3,7 @@ package com.igor.logincurso.exception.handler;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
 import com.igor.logincurso.exception.BadRequestException;
+import com.igor.logincurso.exception.IntegrationException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.exception.erro.ErroResponseDto;
 import org.hibernate.exception.ConstraintViolationException;
@@ -88,6 +89,16 @@ public class ResourceHandler {
                 .httpStatusCode(HttpStatus.BAD_REQUEST.value())
                 .build();
         return new ResponseEntity<>(erro, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IntegrationException.class)
+    public ResponseEntity<ErroResponseDto> integrationException(IntegrationException e){
+        ErroResponseDto erro = ErroResponseDto.builder()
+                .message(e.getMessage())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .httpStatusCode(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
     private ResponseEntity<ErroResponseDto> criaPropertyBindingException(PropertyBindingException ex) {
