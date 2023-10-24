@@ -4,6 +4,7 @@ import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
 import com.igor.logincurso.dto.payment.PaymentDto;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -11,6 +12,18 @@ import java.util.Base64;
 
 @Component
 public class PaymentIntegrationImpl implements PaymentIntegration {
+
+    @Value("${webservices.payment.host}")
+    private String hostUrl;
+
+    @Value("${webservices.payment.v1.customer}")
+    private String customerUrl;
+
+    @Value("${webservices.payment.v1.order}")
+    private String orderUrl;
+
+    @Value("${webservices.payment.v1.payment}")
+    private String paymentUrl;
     private final RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
     public PaymentIntegrationImpl(){
@@ -23,7 +36,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
         try {
             HttpEntity<CustomerDto> request = new HttpEntity<>(customerDto,httpHeaders);
             ResponseEntity<CustomerDto> response = restTemplate.exchange(
-                    "http://localhost:8081/v1/customer", HttpMethod.POST,
+                    hostUrl+customerUrl, HttpMethod.POST,
                     request,CustomerDto.class);
             return response.getBody();
         }catch (Exception e){
@@ -36,7 +49,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
         try {
             HttpEntity<OrderDto> request = new HttpEntity<>(orderDto,httpHeaders);
             ResponseEntity<OrderDto> response = restTemplate.exchange(
-                    "http://localhost:8081/v1/order",HttpMethod.POST,
+                    hostUrl+orderUrl,HttpMethod.POST,
                     request,OrderDto.class);
             return response.getBody();
         }catch (Exception e){
@@ -49,7 +62,7 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
         try {
             HttpEntity<PaymentDto> request = new HttpEntity<>(paymentDto,httpHeaders);
             ResponseEntity<Boolean> response = restTemplate.exchange(
-                    "http://localhost:8081/v1/payment/credit-card/",HttpMethod.POST,
+                    hostUrl+paymentUrl,HttpMethod.POST,
                     request,Boolean.class);
             return response.getBody();
         }catch (Exception e){

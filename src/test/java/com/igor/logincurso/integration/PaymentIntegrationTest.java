@@ -18,7 +18,7 @@ public class PaymentIntegrationTest {
     PaymentIntegration paymentIntegration;
     @Test
     void createCustomerWhenDtoOk() {
-        CustomerDto dto = new CustomerDto(null,"351.909.210-78","teste1@teste2","Igor","Castro");
+        CustomerDto dto = new CustomerDto(null,"191.408.950-25","teste1@teste2","Igor","Castro");
         paymentIntegration.createCustomer(dto);
     }
 
