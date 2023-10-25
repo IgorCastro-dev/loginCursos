@@ -1,9 +1,11 @@
 package com.igor.logincurso.dto.payment;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaymentDto {
@@ -12,6 +14,7 @@ public class PaymentDto {
     private String orderId;
 
     @Data
+    @Builder
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreditCardDto{

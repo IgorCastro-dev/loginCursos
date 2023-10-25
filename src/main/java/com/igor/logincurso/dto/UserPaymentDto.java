@@ -1,4 +1,4 @@
-package com.igor.logincurso.dto.payment;
+package com.igor.logincurso.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

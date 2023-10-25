@@ -1,4 +1,4 @@
-package com.igor.logincurso.dto.payment;
+package com.igor.logincurso.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -20,5 +20,5 @@ public class PaymentProcessDto {
 
     @NotNull(message = "dados do pagamento deve ser informado")
     @JsonProperty("userPaymentInfo")
-    private UserPaymentDto userPaymentInfoDto;
+    private UserPaymentDto userPaymentDto;
 }
