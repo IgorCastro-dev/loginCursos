@@ -9,6 +9,7 @@ import com.igor.logincurso.dto.PaymentProcessDto;
 import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
 import com.igor.logincurso.dto.payment.PaymentDto.CreditCardDto;
+import com.igor.logincurso.core.event.PagamentoRealizadoEvent;
 import com.igor.logincurso.exception.BusinessException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
@@ -18,6 +19,7 @@ import com.igor.logincurso.modelmapper.payment.CustomerAssembler;
 import com.igor.logincurso.modelmapper.payment.OrderAssembler;
 import com.igor.logincurso.modelmapper.payment.PaymentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -25,6 +27,8 @@ import java.util.Objects;
 
 @Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
+    @Autowired
+    private ApplicationEventPublisher publisher;
     @Autowired
     private UsersRepository usersRepository;
     @Autowired
@@ -37,12 +41,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     @Transactional
     public Boolean process(PaymentProcessDto dto) {
         //verifica se exixte usuario por id e se ja tem assinatura
-        Users user = usersRepository.findById(dto.getUserPaymentDto().getId()).orElseThrow(
-                ()->new NotFoundException("Usuário não encontrado")
-        );
-        if (Objects.nonNull(user.getSubscriptionsType())){
-            throw new BusinessException("Pagamento não pode ser processado pois usuário já possui assinatura");
-        }
+        Users user = getUsers(dto);
 
         //cria ou atualiza o customer na api payment
         CustomerDto customerDto = paymentIntegration.createCustomer(CustomerAssembler.build(user));
@@ -57,8 +56,19 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
             //salva o user payment
             UserPaymentInfo userPaymentInfo = userPaymentAssembler.dtoToEntity(dto.getUserPaymentDto());
             userPaymentInfoRepository.save(userPaymentInfo);
+            //criar evento de pagamento confirmado para envio de email
+            publisher.publishEvent(new PagamentoRealizadoEvent(userPaymentInfo,"Igor Curso"));
         }
-        //enviar o email de confirmação
         return true;
+    }
+
+    private Users getUsers(PaymentProcessDto dto) {
+        Users user = usersRepository.findById(dto.getUserPaymentDto().getId()).orElseThrow(
+                ()->new NotFoundException("Usuário não encontrado")
+        );
+        if (Objects.nonNull(user.getSubscriptionsType())){
+            throw new BusinessException("Pagamento não pode ser processado pois usuário já possui assinatura");
+        }
+        return user;
     }
 }
