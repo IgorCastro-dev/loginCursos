@@ -8,14 +8,13 @@ import com.igor.logincurso.domain.service.PaymentInfoService;
 import com.igor.logincurso.dto.PaymentProcessDto;
 import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
-import com.igor.logincurso.dto.payment.PaymentDto;
 import com.igor.logincurso.dto.payment.PaymentDto.CreditCardDto;
 import com.igor.logincurso.exception.BusinessException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
 import com.igor.logincurso.modelmapper.payment.CreditCardAssembler;
-import com.igor.logincurso.modelmapper.payment.CustomerAssembler;
 import com.igor.logincurso.modelmapper.UserPaymentAssembler;
+import com.igor.logincurso.modelmapper.payment.CustomerAssembler;
 import com.igor.logincurso.modelmapper.payment.OrderAssembler;
 import com.igor.logincurso.modelmapper.payment.PaymentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +32,6 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     @Autowired
     private UserPaymentAssembler userPaymentAssembler;
     @Autowired
-    private CustomerAssembler customerAssembler;
-    @Autowired
     private PaymentIntegration paymentIntegration;
     @Override
     @Transactional
@@ -48,7 +45,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         }
 
         //cria ou atualiza o customer na api payment
-        CustomerDto customerDto = paymentIntegration.createCustomer(customerAssembler.userToCustomer(user));
+        CustomerDto customerDto = paymentIntegration.createCustomer(CustomerAssembler.build(user));
 
         //cria o order na api payment
         OrderDto orderDto = paymentIntegration.createOrder(OrderAssembler.build(customerDto,dto));
