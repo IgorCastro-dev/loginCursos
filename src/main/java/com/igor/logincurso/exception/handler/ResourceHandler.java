@@ -2,10 +2,7 @@ package com.igor.logincurso.exception.handler;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.PropertyBindingException;
-import com.igor.logincurso.exception.BadRequestException;
-import com.igor.logincurso.exception.BusinessException;
-import com.igor.logincurso.exception.IntegrationException;
-import com.igor.logincurso.exception.NotFoundException;
+import com.igor.logincurso.exception.*;
 import com.igor.logincurso.exception.erro.ErroResponseDto;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +107,16 @@ public class ResourceHandler {
                 .httpStatusCode(HttpStatus.CONFLICT.value())
                 .build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
+    }
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ErroResponseDto> businessException(EmailException e){
+        ErroResponseDto erro = ErroResponseDto.builder()
+                .message(e.getMessage())
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .httpStatusCode(HttpStatus.BAD_REQUEST.value())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
     }
 
     private ResponseEntity<ErroResponseDto> criaPropertyBindingException(PropertyBindingException ex) {
