@@ -5,8 +5,8 @@ import com.igor.logincurso.core.event.PagamentoRealizadoEvent;
 import com.igor.logincurso.exception.EmailException;
 import com.igor.logincurso.infrastruture.email.EnvioEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionalEventListener;
 import java.util.HashMap;
 
 @Component
@@ -15,7 +15,7 @@ public class NotificacaoPagamentoConfirmado {
     @Autowired
     private EnvioEmailService envioEmailService;
 
-    @TransactionalEventListener
+    @EventListener
     public void aoRealizarPagamento(PagamentoRealizadoEvent event){
         try{
             UserPaymentInfo userPaymentInfo = event.getUserPaymentInfo();

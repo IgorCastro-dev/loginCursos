@@ -3,10 +3,19 @@ package com.igor.logincurso.core.event;
 import com.igor.logincurso.domain.model.UserPaymentInfo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.context.ApplicationEvent;
 
-@Data
-@AllArgsConstructor
-public class PagamentoRealizadoEvent {
+@Getter
+@Setter
+public class PagamentoRealizadoEvent extends ApplicationEvent {
     private UserPaymentInfo userPaymentInfo;
     private String nomeCurso;
+
+    public PagamentoRealizadoEvent(Object source,String nomeCurso,UserPaymentInfo userPaymentInfo) {
+        super(source);
+        this.nomeCurso=nomeCurso;
+        this.userPaymentInfo=userPaymentInfo;
+    }
 }

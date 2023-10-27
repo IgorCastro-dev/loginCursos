@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface SubscriptionsTypeService {
 
+    SubscriptionsType findByProductKey(String productKey);
+
     List<SubscriptionsType> findAll();
 
     SubscriptionsType findById(Long id);

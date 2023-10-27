@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SubscriptionsTypeRepository extends JpaRepository<SubscriptionsType,Long> {
+
+    SubscriptionsType findByProductKey(String productKey);
 }

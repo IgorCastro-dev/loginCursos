@@ -1,10 +1,12 @@
 package com.igor.logincurso.domain.service.impl;
 
+import com.igor.logincurso.domain.model.SubscriptionsType;
 import com.igor.logincurso.domain.model.UserPaymentInfo;
 import com.igor.logincurso.domain.model.Users;
 import com.igor.logincurso.domain.repository.UserPaymentInfoRepository;
 import com.igor.logincurso.domain.repository.UsersRepository;
 import com.igor.logincurso.domain.service.PaymentInfoService;
+import com.igor.logincurso.domain.service.SubscriptionsTypeService;
 import com.igor.logincurso.dto.PaymentProcessDto;
 import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
@@ -31,6 +33,9 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     private ApplicationEventPublisher publisher;
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private SubscriptionsTypeService subscriptionsTypeService;
     @Autowired
     private UserPaymentInfoRepository userPaymentInfoRepository;
     @Autowired
@@ -55,15 +60,22 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
         if (Boolean.TRUE.equals(successPayment)){
             //salva o user payment
             UserPaymentInfo userPaymentInfo = userPaymentAssembler.dtoToEntity(dto.getUserPaymentDto());
+            userPaymentInfo.setUsers(user);
             userPaymentInfoRepository.save(userPaymentInfo);
+
+            //verifica se o produto existe e associa ao usuário
+            var subscriptionsType = subscriptionsTypeService.findByProductKey(dto.getProductKey());
+            user.setSubscriptionsType(subscriptionsType);
+
             //criar evento de pagamento confirmado para envio de email
-            publisher.publishEvent(new PagamentoRealizadoEvent(userPaymentInfo,"Igor Curso"));
+            publisher.publishEvent(new PagamentoRealizadoEvent(this,"Igor Curso",userPaymentInfo));
+            return true;
         }
-        return true;
+        return false;
     }
 
     private Users getUsers(PaymentProcessDto dto) {
-        Users user = usersRepository.findById(dto.getUserPaymentDto().getId()).orElseThrow(
+        Users user = usersRepository.findById(dto.getUserPaymentDto().getUserId()).orElseThrow(
                 ()->new NotFoundException("Usuário não encontrado")
         );
         if (Objects.nonNull(user.getSubscriptionsType())){

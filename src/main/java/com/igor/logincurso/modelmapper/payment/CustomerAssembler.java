@@ -11,7 +11,7 @@ public class CustomerAssembler {
     public static CustomerDto build(Users user){
         String[] fullName = user.getName().split(" ");
         String firstName = fullName[0];
-        String lastName = fullName.length > 1 ? fullName[fullName.length - 1] : "";
+        String lastName = fullName.length > 1 ? fullName[fullName.length - 1] : ".";
         return CustomerDto.builder()
                 .firstName(firstName)
                 .lastName(lastName)

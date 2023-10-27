@@ -36,7 +36,9 @@ public class UserPaymentInfo {
     private String cardSecurityCode;
 
     private BigDecimal price;
-    private Long instalments;
+
+    @Column(name = "installments")
+    private Long installments;
 
     @Column(name = "dt_payment")
     private LocalDate dtPayment;

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
@@ -28,6 +29,15 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Override
+    public SubscriptionsType findByProductKey(String productKey) {
+        SubscriptionsType subscriptionsType = subscriptionsTypeRepository.findByProductKey(productKey);
+        if (Objects.isNull(subscriptionsType)){
+            throw new NotFoundException("SubscriptionsType não encontrado");
+        }
+        return subscriptionsType;
+    }
 
     @Override
     public List<SubscriptionsType> findAll() {
