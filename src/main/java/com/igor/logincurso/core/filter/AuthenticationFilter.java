@@ -1,5 +1,7 @@
 package com.igor.logincurso.core.filter;
 
+import com.igor.logincurso.domain.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -10,9 +12,18 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class AuthenticationFilter extends OncePerRequestFilter {
+    private TokenService tokenService;
+
+    public AuthenticationFilter(TokenService tokenService){
+        this.tokenService = tokenService;
+    }
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getBearerToken(request);
+        if (tokenService.isValid(token)){
+            System.out.println("Está válido");
+        }
         filterChain.doFilter(request,response);
     }
 

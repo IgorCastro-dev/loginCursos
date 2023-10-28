@@ -1,6 +1,7 @@
 package com.igor.logincurso.core.security;
 
 import com.igor.logincurso.core.filter.AuthenticationFilter;
+import com.igor.logincurso.domain.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    private TokenService tokenService;
+
     //config de autorização -> acesso a url
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().addFilterBefore(new AuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .and().addFilterBefore(new AuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
     }
 
     //config de autenticação -> login e senha
