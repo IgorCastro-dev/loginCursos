@@ -41,7 +41,7 @@ public class WebSecurityConfig {
         return http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/users").permitAll()
-                .antMatchers(HttpMethod.GET, "/subscriptions-type").permitAll()
+                .antMatchers(HttpMethod.GET, "/subscriptions-type/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/payment/process").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -4,17 +4,15 @@ import com.igor.logincurso.domain.model.SubscriptionsType;
 import com.igor.logincurso.domain.repository.SubscriptionsTypeRepository;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
 import com.igor.logincurso.dto.SubscriptionsTypeDto;
-import com.igor.logincurso.exception.BadRequestException;
 import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.modelmapper.SubscriptionsTypeAssembler;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,11 +37,14 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         return subscriptionsType;
     }
 
+    @Cacheable(value = "SubscriptionsType")
     @Override
     public List<SubscriptionsType> findAll() {
         return subscriptionsTypeRepository.findAll();
     }
 
+
+    @Cacheable(value = "SubscriptionsType",key = "#id")
     @Override
     public SubscriptionsType findById(Long id) {
         if (subscriptionsTypeRepository.findById(id).isEmpty()){
@@ -52,6 +53,7 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         return subscriptionsTypeRepository.findById(id).get();
     }
 
+    @CacheEvict(value = "SubscriptionsType",allEntries = true)
     @Transactional
     @Override
     public SubscriptionsType save(SubscriptionsTypeDto subscriptionsTypeDto) {
@@ -60,6 +62,7 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         return subscriptionsTypeSalvo;
     }
 
+    @CacheEvict(value = "SubscriptionsType",allEntries = true)
     @Transactional
     @Override
     public SubscriptionsType update(SubscriptionsTypeDto subscriptionsTypeDto, Long id) {
@@ -69,6 +72,7 @@ public class SubscriptionsTypeServiceImpl implements SubscriptionsTypeService {
         return subscriptionsTypeAtualizado;
     }
 
+    @CacheEvict(value = "SubscriptionsType",allEntries = true)
     @Transactional
     @Override
     public void delete(Long id) {

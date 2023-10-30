@@ -3,12 +3,13 @@ package com.igor.logincurso.domain.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
 @Entity
 @Table(name = "subscriptions_type")
-public class SubscriptionsType {
+public class SubscriptionsType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subscriptions_type_id")
