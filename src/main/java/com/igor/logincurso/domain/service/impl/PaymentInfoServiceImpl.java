@@ -1,12 +1,13 @@
 package com.igor.logincurso.domain.service.impl;
 
-import com.igor.logincurso.domain.model.SubscriptionsType;
-import com.igor.logincurso.domain.model.UserPaymentInfo;
-import com.igor.logincurso.domain.model.Users;
+import com.igor.logincurso.core.enums.UserTypeEnum;
+import com.igor.logincurso.domain.model.*;
+import com.igor.logincurso.domain.repository.UserDetailsRepository;
 import com.igor.logincurso.domain.repository.UserPaymentInfoRepository;
 import com.igor.logincurso.domain.repository.UsersRepository;
 import com.igor.logincurso.domain.service.PaymentInfoService;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
+import com.igor.logincurso.domain.service.UserTypeService;
 import com.igor.logincurso.dto.PaymentProcessDto;
 import com.igor.logincurso.dto.payment.CustomerDto;
 import com.igor.logincurso.dto.payment.OrderDto;
@@ -21,7 +22,9 @@ import com.igor.logincurso.modelmapper.payment.CustomerAssembler;
 import com.igor.logincurso.modelmapper.payment.OrderAssembler;
 import com.igor.logincurso.modelmapper.payment.PaymentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -29,6 +32,9 @@ import java.util.Objects;
 
 @Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
+
+    @Value("webservice.igor.password.default")
+    private String defaultPassword;
     @Autowired
     private ApplicationEventPublisher publisher;
     @Autowired
@@ -40,6 +46,10 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     private UserPaymentInfoRepository userPaymentInfoRepository;
     @Autowired
     private UserPaymentAssembler userPaymentAssembler;
+    @Autowired
+    private UserTypeService userTypeService;
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
     @Autowired
     private PaymentIntegration paymentIntegration;
     @Override
@@ -66,6 +76,11 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
             //verifica se o produto existe e associa ao usuário
             var subscriptionsType = subscriptionsTypeService.findByProductKey(dto.getProductKey());
             user.setSubscriptionsType(subscriptionsType);
+
+            //salva o userCredentials
+            UserType userType = userTypeService.findById(UserTypeEnum.ALUNO.getId());
+            UserCredentials userCredentials = new UserCredentials(null,user.getEmail(), new BCryptPasswordEncoder().encode(defaultPassword), userType);
+            userDetailsRepository.save(userCredentials);
 
             //criar evento de pagamento confirmado para envio de email
             publisher.publishEvent(new PagamentoRealizadoEvent(this,"Igor Curso",userPaymentInfo));
