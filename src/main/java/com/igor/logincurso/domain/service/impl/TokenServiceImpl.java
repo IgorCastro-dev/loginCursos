@@ -26,7 +26,7 @@ public class TokenServiceImpl implements TokenService {
         Date expirationDate = new Date(today.getTime() + Long.parseLong(expiration));
         return Jwts.builder()
                 .setIssuer("Igor")
-                .setSubject(user.getId().toString())
+                .setSubject(user.getUsername())
                 .setIssuedAt(today)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS256,secret)
@@ -34,12 +34,14 @@ public class TokenServiceImpl implements TokenService {
     }
 
     @Override
-    public Boolean isValid(String token) {
+    public String validateToken(String token) {
         try{
-            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return true;
+            return Jwts.parser().setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody()
+                    .getSubject();
         }catch (Exception e){
-            return false;
+            return "";
         }
     }
 }
