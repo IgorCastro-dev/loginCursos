@@ -4,11 +4,8 @@ import com.igor.logincurso.domain.model.UserCredentials;
 import com.igor.logincurso.domain.repository.UserDetailsRepository;
 import com.igor.logincurso.domain.service.TokenService;
 import com.igor.logincurso.exception.NotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
