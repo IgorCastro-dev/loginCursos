@@ -1,7 +1,7 @@
 package com.igor.logincurso.integration;
 
-import com.igor.logincurso.domain.model.UserPaymentInfo;
-import com.igor.logincurso.domain.repository.UserPaymentInfoRepository;
+import com.igor.logincurso.domain.model.jpa.UserPaymentInfo;
+import com.igor.logincurso.domain.repository.jpa.UserPaymentInfoRepository;
 import com.igor.logincurso.infrastruture.email.EnvioEmailService;
 import com.igor.logincurso.infrastruture.email.EnvioEmailService.Menssagem;
 import freemarker.template.TemplateException;

@@ -1,8 +1,6 @@
 package com.igor.logincurso.core.event;
 
-import com.igor.logincurso.domain.model.UserPaymentInfo;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.igor.logincurso.domain.model.jpa.UserPaymentInfo;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.context.ApplicationEvent;

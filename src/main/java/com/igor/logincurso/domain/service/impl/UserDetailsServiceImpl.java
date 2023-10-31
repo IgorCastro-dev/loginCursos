@@ -1,13 +1,13 @@
 package com.igor.logincurso.domain.service.impl;
 
-import com.igor.logincurso.domain.model.UserCredentials;
-import com.igor.logincurso.domain.repository.UserDetailsRepository;
+import com.igor.logincurso.domain.repository.jpa.UserDetailsRepository;
 import com.igor.logincurso.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -1,7 +1,7 @@
 package com.igor.logincurso.domain.service.impl;
 
-import com.igor.logincurso.domain.model.SubscriptionsType;
-import com.igor.logincurso.domain.repository.SubscriptionsTypeRepository;
+import com.igor.logincurso.domain.model.jpa.SubscriptionsType;
+import com.igor.logincurso.domain.repository.jpa.SubscriptionsTypeRepository;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
 import com.igor.logincurso.dto.SubscriptionsTypeDto;
 import com.igor.logincurso.exception.NotFoundException;
@@ -12,7 +12,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 

@@ -1,6 +1,6 @@
 package com.igor.logincurso.core.listener;
 
-import com.igor.logincurso.domain.model.UserPaymentInfo;
+import com.igor.logincurso.domain.model.jpa.UserPaymentInfo;
 import com.igor.logincurso.core.event.PagamentoRealizadoEvent;
 import com.igor.logincurso.exception.EmailException;
 import com.igor.logincurso.infrastruture.email.EnvioEmailService;

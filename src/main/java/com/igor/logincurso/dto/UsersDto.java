@@ -1,10 +1,6 @@
 package com.igor.logincurso.dto;
 
-import com.igor.logincurso.domain.model.SubscriptionsType;
-import com.igor.logincurso.domain.model.UserPaymentInfo;
-import com.igor.logincurso.domain.model.UserType;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;

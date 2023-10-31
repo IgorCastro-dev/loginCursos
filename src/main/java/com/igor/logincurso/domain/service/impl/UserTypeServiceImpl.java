@@ -1,7 +1,7 @@
 package com.igor.logincurso.domain.service.impl;
 
-import com.igor.logincurso.domain.model.UserType;
-import com.igor.logincurso.domain.repository.UserTypeRepository;
+import com.igor.logincurso.domain.model.jpa.UserType;
+import com.igor.logincurso.domain.repository.jpa.UserTypeRepository;
 import com.igor.logincurso.domain.service.UserTypeService;
 import com.igor.logincurso.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.igor.logincurso.core.filter;
 
-import com.igor.logincurso.domain.model.UserCredentials;
-import com.igor.logincurso.domain.repository.UserDetailsRepository;
+import com.igor.logincurso.domain.model.jpa.UserCredentials;
+import com.igor.logincurso.domain.repository.jpa.UserDetailsRepository;
 import com.igor.logincurso.domain.service.TokenService;
 import com.igor.logincurso.exception.NotFoundException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

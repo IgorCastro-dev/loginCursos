@@ -1,10 +1,9 @@
-package com.igor.logincurso.domain.model;
+package com.igor.logincurso.domain.model.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

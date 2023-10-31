@@ -1,10 +1,7 @@
 package com.igor.logincurso.modelmapper.payment;
 
-import com.igor.logincurso.domain.model.Users;
+import com.igor.logincurso.domain.model.jpa.Users;
 import com.igor.logincurso.dto.payment.CustomerDto;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 public class CustomerAssembler {
 

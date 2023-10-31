@@ -1,6 +1,6 @@
 package com.igor.logincurso.modelmapper;
 
-import com.igor.logincurso.domain.model.UserPaymentInfo;
+import com.igor.logincurso.domain.model.jpa.UserPaymentInfo;
 import com.igor.logincurso.dto.UserPaymentDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

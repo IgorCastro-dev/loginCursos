@@ -1,6 +1,6 @@
 package com.igor.logincurso.domain.service;
 
-import com.igor.logincurso.domain.model.SubscriptionsType;
+import com.igor.logincurso.domain.model.jpa.SubscriptionsType;
 import com.igor.logincurso.dto.SubscriptionsTypeDto;
 
 import java.util.List;

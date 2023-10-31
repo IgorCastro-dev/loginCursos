@@ -1,7 +1,7 @@
 package com.igor.logincurso.domain.service.impl;
 
 
-import com.igor.logincurso.domain.model.UserCredentials;
+import com.igor.logincurso.domain.model.jpa.UserCredentials;
 import com.igor.logincurso.domain.service.TokenService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,14 +1,18 @@
 package com.igor.logincurso.domain.service.impl;
 
-import com.igor.logincurso.domain.model.UserType;
-import com.igor.logincurso.domain.model.Users;
-import com.igor.logincurso.domain.repository.UsersRepository;
+import com.igor.logincurso.domain.model.jpa.UserType;
+import com.igor.logincurso.domain.model.jpa.Users;
+import com.igor.logincurso.domain.repository.jpa.UsersRepository;
+import com.igor.logincurso.domain.repository.redis.UserRecoveryCodeRepository;
 import com.igor.logincurso.domain.service.UserTypeService;
 import com.igor.logincurso.domain.service.UsersService;
 import com.igor.logincurso.dto.UsersDto;
 import com.igor.logincurso.modelmapper.UsersAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -19,6 +23,9 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private UsersRepository usersRepository;
 
+    @Autowired
+    private UserRecoveryCodeRepository userRecoveryCodeRepository;
+
     @Override
     public Users save(UsersDto usersDto) {
         Users users = usersAssembler.dtoToEntity(usersDto);
@@ -26,4 +33,5 @@ public class UsersServiceImpl implements UsersService {
         users.setUserType(userType);
         return usersRepository.save(users);
     }
+
 }

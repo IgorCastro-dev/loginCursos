@@ -1,4 +1,4 @@
-package com.igor.logincurso.domain.model;
+package com.igor.logincurso.domain.model.jpa;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

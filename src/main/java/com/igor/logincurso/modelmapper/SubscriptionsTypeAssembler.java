@@ -1,6 +1,6 @@
 package com.igor.logincurso.modelmapper;
 
-import com.igor.logincurso.domain.model.SubscriptionsType;
+import com.igor.logincurso.domain.model.jpa.SubscriptionsType;
 import com.igor.logincurso.dto.SubscriptionsTypeDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

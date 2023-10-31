@@ -1,10 +1,8 @@
 package com.igor.logincurso.domain.controller;
 
-import com.igor.logincurso.domain.model.jpa.Users;
 import com.igor.logincurso.domain.model.redis.UserRecoveryCode;
-import com.igor.logincurso.domain.service.UsersService;
+import com.igor.logincurso.domain.service.UserRecoveryService;
 import com.igor.logincurso.dto.EmailDto;
-import com.igor.logincurso.dto.UsersDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +15,13 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
-public class UsersController {
+public class UserRecoveryCodeController {
 
     @Autowired
-    private UsersService usersService;
+    private UserRecoveryService userRecoveryService;
 
-    @PostMapping
-    public ResponseEntity<Users> save(@RequestBody @Valid UsersDto usersDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usersService.save(usersDto));
+    @PostMapping("send-recovery-code")
+    public ResponseEntity<UserRecoveryCode> sendRecoveryCode(@RequestBody @Valid EmailDto email){
+        return ResponseEntity.status(HttpStatus.CREATED).body(userRecoveryService.sendRecoveryCode(email));
     }
 }

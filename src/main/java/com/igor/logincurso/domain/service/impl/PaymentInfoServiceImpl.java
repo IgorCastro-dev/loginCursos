@@ -1,10 +1,13 @@
 package com.igor.logincurso.domain.service.impl;
 
 import com.igor.logincurso.core.enums.UserTypeEnum;
-import com.igor.logincurso.domain.model.*;
-import com.igor.logincurso.domain.repository.UserDetailsRepository;
-import com.igor.logincurso.domain.repository.UserPaymentInfoRepository;
-import com.igor.logincurso.domain.repository.UsersRepository;
+import com.igor.logincurso.domain.model.jpa.UserCredentials;
+import com.igor.logincurso.domain.model.jpa.UserPaymentInfo;
+import com.igor.logincurso.domain.model.jpa.UserType;
+import com.igor.logincurso.domain.model.jpa.Users;
+import com.igor.logincurso.domain.repository.jpa.UserDetailsRepository;
+import com.igor.logincurso.domain.repository.jpa.UserPaymentInfoRepository;
+import com.igor.logincurso.domain.repository.jpa.UsersRepository;
 import com.igor.logincurso.domain.service.PaymentInfoService;
 import com.igor.logincurso.domain.service.SubscriptionsTypeService;
 import com.igor.logincurso.domain.service.UserTypeService;
