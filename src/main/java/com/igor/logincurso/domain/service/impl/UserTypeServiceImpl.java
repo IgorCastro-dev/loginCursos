@@ -8,14 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserTypeServiceImpl implements UserTypeService {
+public class  UserTypeServiceImpl implements UserTypeService {
 
     @Autowired
     UserTypeRepository userTypeRepository;
     @Override
     public UserType findById(Long id) {
-        UserType userType = userTypeRepository.findById(id)
+        return userTypeRepository.findById(id)
                 .orElseThrow(()->new NotFoundException("UserType não encontrado"));
-        return userType;
     }
 }
