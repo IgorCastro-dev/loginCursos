@@ -6,4 +6,6 @@ import com.igor.logincurso.dto.UsersDto;
 
 public interface UsersService{
     Users save(UsersDto usersDto);
+
+    Users findByEmail(String email);
 }

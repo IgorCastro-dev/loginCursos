@@ -7,12 +7,11 @@ import com.igor.logincurso.domain.repository.redis.UserRecoveryCodeRepository;
 import com.igor.logincurso.domain.service.UserTypeService;
 import com.igor.logincurso.domain.service.UsersService;
 import com.igor.logincurso.dto.UsersDto;
+import com.igor.logincurso.exception.NotFoundException;
 import com.igor.logincurso.modelmapper.UsersAssembler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Random;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -33,5 +32,13 @@ public class UsersServiceImpl implements UsersService {
         users.setUserType(userType);
         return usersRepository.save(users);
     }
+
+    @Override
+    public Users findByEmail(String email) {
+        return usersRepository.findByEmail(email).orElseThrow(
+                () -> new NotFoundException("Usuário não encontrado")
+        );
+    }
+
 
 }
