@@ -5,4 +5,6 @@ import com.igor.logincurso.dto.EmailDto;
 
 public interface UserRecoveryService {
     UserRecoveryCode sendRecoveryCode(EmailDto email);
+
+    Boolean isValidCode(String recoveryCode, String email);
 }
