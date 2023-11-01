@@ -55,10 +55,6 @@ public class WebSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    public static void main(String[] args) {
-        System.out.println(new BCryptPasswordEncoder().encode("IgorCastro123"));
-    }
-
     //config de autenticação -> login e senha
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -24,10 +24,10 @@ import com.igor.logincurso.modelmapper.UserPaymentAssembler;
 import com.igor.logincurso.modelmapper.payment.CustomerAssembler;
 import com.igor.logincurso.modelmapper.payment.OrderAssembler;
 import com.igor.logincurso.modelmapper.payment.PaymentMapper;
+import com.igor.logincurso.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -82,7 +82,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
 
             //salva o userCredentials
             UserType userType = userTypeService.findById(UserTypeEnum.ALUNO.getId());
-            UserCredentials userCredentials = new UserCredentials(null,user.getEmail(), new BCryptPasswordEncoder().encode(defaultPassword), userType);
+            UserCredentials userCredentials = new UserCredentials(null,user.getEmail(), PasswordUtils.encode(defaultPassword), userType);
             userDetailsRepository.save(userCredentials);
 
             //criar evento de pagamento confirmado para envio de email

@@ -3,18 +3,17 @@ package com.igor.logincurso.domain.service.impl;
 import com.igor.logincurso.core.event.EnvioRecoveryCodeEvent;
 import com.igor.logincurso.domain.model.jpa.UserCredentials;
 import com.igor.logincurso.domain.model.redis.UserRecoveryCode;
-import com.igor.logincurso.domain.repository.jpa.UserDetailsRepository;
 import com.igor.logincurso.domain.repository.redis.UserRecoveryCodeRepository;
 import com.igor.logincurso.domain.service.UserRecoveryService;
 import com.igor.logincurso.domain.service.UsersService;
 import com.igor.logincurso.dto.EmailDto;
 import com.igor.logincurso.dto.UserDetailsDto;
 import com.igor.logincurso.exception.NotFoundException;
+import com.igor.logincurso.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -71,9 +70,9 @@ public class UserRecoveryServiceImpl implements UserRecoveryService {
     @Override
     @Transactional
     public Void updatePassword(UserDetailsDto userDetailsDto) {
-        if (isValidCode(userDetailsDto.getRecoveryCode(), userDetailsDto.getEmail())){
+        if (Boolean.TRUE.equals(isValidCode(userDetailsDto.getRecoveryCode(), userDetailsDto.getEmail()))){
             UserCredentials userCredentials = (UserCredentials) userDetailsService.loadUserByUsername(userDetailsDto.getEmail());
-            userCredentials.setPassword(new BCryptPasswordEncoder().encode(userDetailsDto.getPassword()));
+            userCredentials.setPassword(PasswordUtils.encode(userDetailsDto.getPassword()));
         }
         return null;
     }
