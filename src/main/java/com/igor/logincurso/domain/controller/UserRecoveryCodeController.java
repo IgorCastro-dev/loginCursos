@@ -1,6 +1,5 @@
 package com.igor.logincurso.domain.controller;
 
-import com.igor.logincurso.domain.model.redis.UserRecoveryCode;
 import com.igor.logincurso.domain.service.UserRecoveryService;
 import com.igor.logincurso.dto.EmailDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,8 @@ public class UserRecoveryCodeController {
     private UserRecoveryService userRecoveryService;
 
     @PostMapping("recovery-code/send")
-    public ResponseEntity<UserRecoveryCode> sendRecoveryCode(@RequestBody @Valid EmailDto email){
-        return ResponseEntity.status(HttpStatus.CREATED).body(userRecoveryService.sendRecoveryCode(email));
+    public ResponseEntity<Void> sendRecoveryCode(@RequestBody @Valid EmailDto email){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userRecoveryService.sendRecoveryCode(email));
     }
 
     @GetMapping("recovery-code/valid")

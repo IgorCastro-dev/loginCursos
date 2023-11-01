@@ -30,7 +30,7 @@ public class UserRecoveryServiceImpl implements UserRecoveryService {
 
     @Transactional
     @Override
-    public UserRecoveryCode sendRecoveryCode(EmailDto email) {
+    public Void sendRecoveryCode(EmailDto email) {
         String code = String.format("%04d",new Random().nextInt(10000));
         UserRecoveryCode userRecoveryCode = new UserRecoveryCode();
         Optional<UserRecoveryCode> userRecoveryCodeOptional = userRecoveryCodeRepository.findByEmail(email.getEmail());
@@ -43,7 +43,8 @@ public class UserRecoveryServiceImpl implements UserRecoveryService {
         userRecoveryCode.setCode(code);
         userRecoveryCode.setDateTime(LocalDateTime.now());
         publisher.publishEvent(new EnvioRecoveryCodeEvent(this,userRecoveryCode));
-        return userRecoveryCodeRepository.save(userRecoveryCode);
+        userRecoveryCodeRepository.save(userRecoveryCode);
+        return null;
     }
 
     @Override
