@@ -36,7 +36,7 @@ import java.util.Objects;
 @Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
 
-    @Value("webservice.igor.password.default")
+    @Value("${webservice.igor.password.default}")
     private String defaultPassword;
     @Autowired
     private ApplicationEventPublisher publisher;
