@@ -1,6 +1,7 @@
 package com.igor.logincurso.infrastruture.payment.impl;
 
 import com.igor.logincurso.dto.payment.CustomerDto;
+import com.igor.logincurso.exception.IntegrationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,21 @@ class PaymentIntegrationImplTest {
         httpHeaders = getHttpHeaders();
     }
     @Test
-    void give_createCustomer_when_customerDtoIsOk_then_returnCustomerDto() {
+    void give_createCustomer_when_apiResponseIs400_then_returnCustomerDto() {
+        ReflectionTestUtils.setField(paymentIntegration,"hostUrl","http://localhost:8081");
+        ReflectionTestUtils.setField(paymentIntegration,"customerUrl","/v1/customer");
+        CustomerDto customerDto = new CustomerDto();
+        HttpEntity<CustomerDto> request = new HttpEntity<>(customerDto,httpHeaders);
+        Mockito.when(restTemplate.exchange("http://localhost:8081/v1/customer",HttpMethod.POST,
+                request, CustomerDto.class)).thenThrow(IntegrationException.class);
+        Assertions.assertThrows(IntegrationException.class,
+                ()->paymentIntegration.createCustomer(customerDto));
+        Mockito.verify(restTemplate,Mockito.times(1))
+                .exchange("http://localhost:8081/v1/customer",HttpMethod.POST, request, CustomerDto.class);
+    }
+
+    @Test
+    void give_createCustomer_when_apiResponseIs200_then_returnIntegrationException() {
         ReflectionTestUtils.setField(paymentIntegration,"hostUrl","http://localhost:8081");
         ReflectionTestUtils.setField(paymentIntegration,"customerUrl","/v1/customer");
         CustomerDto customerDto = new CustomerDto();
@@ -46,7 +61,6 @@ class PaymentIntegrationImplTest {
         Mockito.verify(restTemplate,Mockito.times(1))
                 .exchange("http://localhost:8081/v1/customer",HttpMethod.POST, request, CustomerDto.class);
     }
-
     private static HttpHeaders getHttpHeaders() {
         HttpHeaders httpHeaders = new HttpHeaders();
         String credentials = "igor:igor";
