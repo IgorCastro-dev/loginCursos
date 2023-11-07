@@ -5,6 +5,7 @@ import com.igor.logincurso.dto.payment.OrderDto;
 import com.igor.logincurso.dto.payment.PaymentDto;
 import com.igor.logincurso.exception.IntegrationException;
 import com.igor.logincurso.infrastruture.payment.PaymentIntegration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -25,10 +26,10 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Value("${webservices.payment.v1.payment}")
     private String paymentUrl;
-    private final RestTemplate restTemplate;
+    @Autowired
+    private RestTemplate restTemplate;
     private final HttpHeaders httpHeaders;
     public PaymentIntegrationImpl(){
-        this.restTemplate = new RestTemplate();
         this.httpHeaders = getHttpHeaders();
     }
 

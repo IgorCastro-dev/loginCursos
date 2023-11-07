@@ -114,7 +114,7 @@ class UserRecoveryServiceImplTest {
         Mockito.when(userRecoveryCodeRepository.findByEmail(userRecoveryCode.getEmail())).thenReturn(Optional.of(userRecoveryCode));
         UserCredentials userCredentials = new UserCredentials();
         Mockito.when(userDetailsService.loadUserByUsername(userDetailsDto.getEmail())).thenReturn(userCredentials);
-        Assertions.assertEquals(null,userRecoveryService.updatePassword(userDetailsDto));
+        assertNull(userRecoveryService.updatePassword(userDetailsDto));
         Mockito.verify(userRecoveryCodeRepository,Mockito.times(1)).findByEmail(userRecoveryCode.getEmail());
         Mockito.verify(userDetailsService,Mockito.times(1)).loadUserByUsername(userDetailsDto.getEmail());
     }
